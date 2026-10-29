@@ -44,6 +44,9 @@ input[aria-invalid=true] { border-color: var(--danger); }
 .todo-list input { width: 1.1rem; height: 1.1rem; flex: 0 0 1.1rem; accent-color: var(--accent); }
 .todo-list .done span { text-decoration: line-through; color: var(--ink-muted); }
 .todo-list .button { flex-shrink: 0; }
+.list-actions { display: flex; justify-content: flex-end; margin-top: 1rem; }
+.button:disabled { opacity: .55; cursor: not-allowed; }
+.secondary:disabled:hover { background: var(--surface-raised); }
 .filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
 .filters [aria-pressed=true] { background: var(--ink); color: #fff; border-color: var(--ink); }
 #empty-list { margin-top: 1rem; }
