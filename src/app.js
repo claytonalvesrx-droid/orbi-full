@@ -1,4 +1,4 @@
-import { addTodo, toggleTodo, removeTodo, visibleTodos } from "./todo.js";
+import { addTodo, toggleTodo, removeTodo, clearCompleted, visibleTodos } from "./todo.js";
 
 let todos = [
   { id: 1, title: "Sign in to Orbi Cloud", done: true },
@@ -15,6 +15,7 @@ const list = document.querySelector("#list");
 const status = document.querySelector("#app-status");
 const error = document.querySelector("#input-error");
 const empty = document.querySelector("#empty-list");
+const clearButton = document.querySelector("#clear-completed");
 const filters = document.querySelectorAll("[data-filter]");
 
 // Rerendering removes focused controls. Return focus to the same task or its
@@ -56,6 +57,7 @@ function render() {
     item.append(label, del);
     return item;
   }));
+  clearButton.disabled = !todos.some((t) => t.done);
   empty.hidden = visible.length > 0;
   empty.textContent = {
     all: "No tasks yet. Add your first task above.",
@@ -87,6 +89,14 @@ form.addEventListener("submit", (event) => {
   render();
   status.textContent = "Task added. Showing all tasks.";
   input.focus();
+});
+clearButton.addEventListener("click", () => {
+  todos = clearCompleted(todos);
+  render();
+  // The button disables itself on an empty completed list, so hand focus back
+  // to the task input instead of leaving it on a control that cannot be used.
+  (clearButton.disabled ? input : clearButton).focus();
+  status.textContent = "Completed tasks cleared.";
 });
 for (const button of filters) {
   button.addEventListener("click", () => {
